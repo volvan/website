@@ -1,0 +1,15 @@
+{# templates/cells.html #}
+{% macro cell(title, content) %}
+<div class="data-display-cell">
+    <div class="multi-cell-title-container">
+        <h3 class="cell-title multi-cell-title">{{ title }}</h3>
+    </div>
+    <div class="cell-content-container multicell-content-container">
+        {% for key, value in content.items() %}
+        <div class="cell-content-subcontainer">
+            <p class="multi-cell-key">{{key}}</p><p class="multi-cell-value">{{value}}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endmacro %}

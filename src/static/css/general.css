@@ -1,0 +1,61 @@
+:root {
+    --primary: #03353A;
+    --secondary: #fde3a7;
+    --accent: #ff8c00;
+    --line1: #4bc0c0;
+    --line2: #6b7d53;
+
+    --container-border-radius: 8px;
+    --button-border-radius: 8px;
+}
+
+* {
+    font-family: Poppins;
+}
+
+body{
+    background-color: var(--primary);
+    margin: 0;
+	
+    padding: 25px;
+    
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    
+    box-sizing: border-box;
+    
+    overflow-x: hidden
+
+}
+
+/* Remove <a> default styles */
+a:link {
+    text-decoration: inherit;
+    color: inherit;
+}
+
+a:visited {
+    text-decoration: inherit;
+    color: inherit;
+}
+
+/* Remove <button> default styles */
+button, input[type="submit"], input[type="reset"] {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+#main-container{
+    border-radius: var(--container-border-radius);
+    /* max-height: calc(100svh - 50px); */
+    min-width: 100%;
+    padding: 50px;
+    box-sizing: border-box;
+    
+}

@@ -1,0 +1,7 @@
+{# templates/cells.html #}
+{% macro cell(title, content) %}
+<div class="data-display-cell">
+    <h3 class="cell-title">{{ title }}</h3>
+    <p class="cell-content">{{ content }}</p>
+</div>
+{% endmacro %}

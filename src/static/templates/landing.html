@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+{% import 'cell.html' as cell_template %}
+{% import 'multi_cell.html' as multi_cell_template %}
+
+{% block header %}
+    <h1>{% block title %}Landing Page{% endblock %}</h1>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="landing-page-container">
+        
+        <div class="logo-container">
+                <img src="{{ url_for('static', filename='img/volva-logo-cropped.png') }}" alt="Völva Logo" srcset="">
+            <i><a href="https://www.frostbyte.is" class="img-link">Conducted by Frostbyte Laboratory</a></i>
+        </div>
+
+        
+        <div class="data-display-container">
+            <div class="country-buttons">
+                <a href="/IS"><button data-country-code="IS" id="btn-active">Iceland</button></a>
+                <a href="/GL"><button data-country-code="GL">Greenland</button></a>
+                <a href="/FO"><button data-country-code="FO">Faroe Islands</button></a>
+            </div>
+            <div class="data-display-row">
+                {% for cell in simple_cells %}
+                    {{ cell_template.cell( cell.title, cell.value ) }}
+                {% endfor %}
+            </div>
+            <div class="data-display-row line-graph-row">
+                {% for model in line_graphs %}
+                <div class="data-display-cell">
+                    <canvas id="{{model.canvas_id}}"></canvas>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="data-display-row">
+                {% for cell in multi_cells %}
+                    {{ multi_cell_template.cell( cell.title, cell.content ) }}
+                {% endfor %}
+            </div>
+    
+        </div>
+        
+    </div>
+    <script>
+        /*========== Button Active Logic ==========*/
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1) pull out the last part of the URL path:
+            const segments = window.location.pathname.split('/').filter(Boolean);
+            const lastCode = segments.pop();           // e.g. "FO" or "IS", etc.
+
+            // 2) define your default country code:
+            const defaultCode = 'IS';                  // Iceland
+
+            // 3) find the default button and the target (if it exists):
+            const defaultBtn = document.querySelector(`[data-country-code="${defaultCode}"]`);
+            const targetBtn  = document.querySelector(`[data-country-code="${lastCode}"]`);
+
+            // 4) if we found a matching button AND it's not the default:
+            if (targetBtn && defaultBtn && targetBtn !== defaultBtn) {
+                defaultBtn.removeAttribute('id');        // take active off Iceland
+                targetBtn.id = 'btn-active';             // put active on the new one
+            }
+        });
+
+
+        /*========== Populate Line Graphs ==========*/
+        {% for model in line_graphs %}
+            {% if model|length == 1 %}
+                generate_one_data_graph(
+                    {{ model.x_vals | safe }}, 
+                    {{ model.plots[0] | safe }}, 
+                    "{{ model.canvas_id }}", 
+                    "Open ports identified",
+                    "{{ model.title }}"
+                );
+            {% else %}
+                {{model|length}}
+                {{model|length}}
+                
+            {% endif %}
+            
+        {% endfor %}
+
+
+        // generate_one_data_graph({{ host_alive_labels | safe }}, {{ host_alive_values | safe }}, "alive-vs-dead-hosts-chart", "Hosts found");
+        
+
+        /* Alive hosts found each day */
+        // generate_two_data_graph(
+        //     {{ host_labels | safe }},       // labels
+        //     {{host_dead_values | safe}},    // line1 values
+        //     {{ host_alive_values | safe }}, // line2 values
+        //     "alive-vs-dead-hosts-chart",    // ID of canvas element that will hold the graph
+        //     "Dead",                         // line1 label
+        //     "Alive",                        // line2 label
+        //     "Alive hosts found each day"    // Title of chart
+        // );
+
+
+
+        /* Open ports found each day 
+        generate_one_data_graph(
+            {{ port_open_labels | safe }}, 
+             {{ port_open_values | safe }}, 
+              "open-ports-chart", 
+              "Open ports found"
+            );
+
+        // Filtered ports found each day 
+        generate_one_data_graph({{ port_filtered_labels | safe }}, {{ port_filtered_values | safe }}, "filtered-ports-chart", "Filtered ports found");
+        */
+    //    /* Filtered ports found each day */
+    //    generate_two_data_graph(
+    //         {{ port_filtered_labels | safe }},  // labels
+    //         {{ port_open_values | safe }},      // line1 values
+    //         {{ port_filtered_values | safe }},  // line2 values
+    //         "open-vs-filtered-ports-chart",     // ID of canvas element that will hold the graph
+    //         "Open ports found",                 // line1 legend
+    //         "Filtered ports found",             // line2 legend
+    //         "Filtered ports found each day"     // Title of chart
+    //     );
+       
+       
+    //    // All alive vs all dead hosts
+    //    generate_two_data_doughnut(
+    //         {{ total_hosts_alive | safe }},     // values1
+    //         {{ total_hosts_dead | safe }},      // values2
+    //         "alive-vs-dead-doughnut-chart",     // ID of canvas element that will hold the graph
+    //         "Alive",                            // values1 legend
+    //         "Dead",                             // values2 legend
+    //         "All alive vs all dead hosts"       // Title of chart
+    //     );
+       
+
+    //    generate_one_data_graph(
+    //         {{ total_hosts_ratio_dates | safe }},   // labels
+    //         {{ hosts_ratio | safe }},               // line1 values
+    //         "alive-vs-dead-hosts-ratio-chart",      // ID of canvas element that will hold the graph
+    //         "Alive / Dead",                         // line1 legend
+    //         "Ratio between Alive and Dead hosts"    // Title of chart
+    //     );
+
+        // // 2) Define your data exactly as in the docs
+        // const doughnutData = {
+        //     labels: [
+        //     'Red',
+        //     'Blue',
+        //     'Yellow'
+        //     ],
+        //     datasets: [{
+        //     label: 'My First Dataset',
+        //     data: [300, 50, 100],
+        //     backgroundColor: [
+        //         'rgb(255, 99, 132)',
+        //         'rgb(54, 162, 235)',
+        //         'rgb(255, 205, 86)'
+        //     ],
+        //     hoverOffset: 4
+        //     }]
+        // };
+
+        // // 3) Set up the config for a doughnut
+        // const doughnutConfig = {
+        //     type: 'doughnut',
+        //     data: doughnutData,
+        //     options: {
+        //     responsive: false  // or true if you want it to resize
+        //     // cutout defaults to '50%' for doughnuts, just like the docs
+        //     }
+        // };
+
+        // // 4) Render it!
+        // new Chart(
+        //     document.getElementById('alive-vs-dead-doughnut-chart'),
+        //     doughnutConfig
+        // );
+
+    </script>
+{% endblock %}
+

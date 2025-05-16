@@ -1,4 +1,4 @@
-from include.data.DataWrapper import DataWrapper
+from src.include.data.DataWrapper import DataWrapper
 import sys
 from .DBLogic import DBLogic
 

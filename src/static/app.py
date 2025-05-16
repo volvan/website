@@ -1,7 +1,7 @@
-from include.logic.LogicWrapper import LogicWrapper
-from include.models.lineGraphModel import LineGraphModel
-from include.models.blockModel import BlockModel
-from include.models.multiBlockModel import MultiBlockModel
+from src.include.logic.LogicWrapper import LogicWrapper
+from src.include.models.lineGraphModel import LineGraphModel
+from src.include.models.blockModel import BlockModel
+from src.include.models.multiBlockModel import MultiBlockModel
 import random
 from dotenv import load_dotenv
 from flask import Flask, render_template

@@ -1,24 +1,17 @@
 
 # The Website
 
-The Website is Völva’s public-facing dashboard. It provides a transparent, visual overview of Iceland’s internet-exposed systems using the results of the national scanning pipeline. Built with Flask, it enables stakeholders and the public to explore trends, identify exposure, and understand the digital surface.
+---
+
+The [website](https://volva.frostbyte.is) is a public-facing dashboard for Völva. It provides a transparent, visual overview of nations internet-facing systems using the results of the [scanner](https://github.com/volvan/scanner) pipeline. Built with Flask, it enables the public to explore trends and understand the current surface.
 
 ## Völva: Transparency Platform
 
-This dashboard integrates directly with the Völva scan data, aggregating nationwide statistics into accessible visualizations. It is designed to **inform**, **educate**, and **support responsible cybersecurity.**
+This dashboard integrates directly with the scan data, aggregating statistics into accessible visualizations. It is designed to **inform**, **educate**, and **support responsible cybersecurity.**
 
 ![Version](https://img.shields.io/github/v/tag/volvan/website?label=version)
 ![License](https://img.shields.io/badge/license-Custom--Academic--Use-blue)  
 ![Python](https://img.shields.io/badge/python-3.11-blue)
-
----
-
-## Quick Links
-
-- **[Website](https://volva.frostbyte.is)**
-- **[GitLab Mirror](https://gitlab.frostbyte.is/academic-projects/scan_ice)**
-- **[Original Repository](https://github.com/marteinnlundi/ScanICE)**
-- **[Presentation Slides for Völva](https://blank.page/)**
 
 ---
 
